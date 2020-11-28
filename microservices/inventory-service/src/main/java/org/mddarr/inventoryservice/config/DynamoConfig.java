@@ -19,6 +19,7 @@ public class DynamoConfig {
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
         return  AmazonDynamoDBClientBuilder.standard()
+                .withRegion("us-west-2")
 //                .withEndpointConfiguration(
 //                        new AwsClientBuilder.EndpointConfiguration(dynamoEndpoint, region))
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
