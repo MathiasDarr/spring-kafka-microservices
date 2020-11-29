@@ -2,7 +2,7 @@
 
 if [[ -z $2 ]]
 then
-  stackname=spring-inventory-service-stack
+  stackname=microservices-stack
 else
   stackname=$2
 fi

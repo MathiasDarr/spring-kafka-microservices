@@ -13,7 +13,7 @@ Parameters:
     Default: 710339184759.dkr.ecr.us-west-2.amazonaws.com/spring-inventory-service:latest
   ServiceName:
     Type: String
-    Default: microservices-inventory-ecs-service
+    Default: product-service
 
   ContainerPort:
     Type: Number
@@ -47,7 +47,7 @@ Mappings:
 
 
 Resources:
-  ECSCluster:
+  Cluster:
     Type: 'AWS::ECS::Cluster'
     Properties:
       ClusterName: MicroservicesCluster
@@ -98,18 +98,49 @@ Resources:
             Action: 'sts:AssumeRole'
 
 
+  Service:
+    Type: AWS::ECS::Service
+    # This dependency is needed so that the load balancer is setup correctly in time
+#    DependsOn:
+#      - ListenerHTTPS
+    Properties:
+      ServiceName: !Ref ServiceName
+      Cluster: !Ref Cluster
+      TaskDefinition: !Ref TaskDefinition
+      DeploymentConfiguration:
+        MinimumHealthyPercent: 100
+        MaximumPercent: 200
+      DesiredCount: 1
+      # This may need to be adjusted if the container takes a while to start up
+      HealthCheckGracePeriodSeconds: 30
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          # change to DISABLED if you're using private subnets that have access to a NAT gateway
+          AssignPublicIp: ENABLED
+          Subnets:
+            - Fn::ImportValue:
+                spring-vpc-stack:PublicSubnetOne
+            - Fn::ImportValue:
+                spring-vpc-stack:PrivateSubnetOne
+          SecurityGroups:
+            - !Ref ContainerSecurityGroup
+#      LoadBalancers:
+#        - ContainerName: !Ref ServiceName
+#          ContainerPort: !Ref ContainerPort
+#          TargetGroupArn: !Ref TargetGroup
 
 
-#  ContainerSecurityGroup:
-#    Type: AWS::EC2::SecurityGroup
-#    Properties:
-#      GroupDescription: !Join [ '', [ !Ref ServiceName, ContainerSecurityGroup ] ]
-#      VpcId: vpc-0717a1cb195d96eff
-#      SecurityGroupIngress:
-#        - IpProtocol: tcp
-#          CidrIp: 0.0.0.0/0
-#          FromPort: !Ref ContainerPort
-#          ToPort: !Ref ContainerPort
+  ContainerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Join [ '', [ !Ref ServiceName, ContainerSecurityGroup ] ]
+      VpcId: vpc-0717a1cb195d96eff
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          CidrIp: 0.0.0.0/0
+          FromPort: !Ref ContainerPort
+          ToPort: !Ref ContainerPort
 
 
 #  FargateContainerSecurityGroup:
