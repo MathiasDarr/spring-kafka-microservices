@@ -30,9 +30,14 @@ public class ProductsController {
         return productService.fetchAllProducts();
     }
 
-    @GetMapping("products/{brandID}")
-    public List<Product> allProducts(@PathVariable String brandID) {
+    @GetMapping("products/vendor/{brandID}")
+    public List<Product> allVendorProducts(@PathVariable String brandID) {
         return productService.fetchAllProductsByBrand(brandID);
+    }
+
+    @GetMapping("products/category/{category}")
+    public List<Product> allCategoryProducts(@PathVariable String category) {
+        return productService.fetchAllProductsByCategory(category);
     }
 
     @GetMapping("products/{brand}/{productName}")

@@ -3,7 +3,11 @@ package org.mddarr.inventoryservice.repository;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.*;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
@@ -15,7 +19,7 @@ import org.mddarr.inventoryservice.dto.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.*;
@@ -58,12 +62,40 @@ public class ProductRepository {
         vals.put(":brand", new AttributeValue().withS(brand));
 
         DynamoDBQueryExpression<ProductEntity> queryExp = new DynamoDBQueryExpression<ProductEntity>()
-                .withKeyConditionExpression("brandID = :brand")
+                .withKeyConditionExpression("vendor = :brand")
                 .withConsistentRead(false)
                 .withExpressionAttributeValues(vals);
         List<ProductEntity> products =  mapper.query(ProductEntity.class, queryExp);
         return products;
     }
+
+    public List<ProductEntity> fetchAllProductsByCategory(String category){
+        Table table = dynamoDB.getTable("Products");
+        Index index = table.getIndex("categoryGSI");
+
+        Map<String, AttributeValue> vals = new HashMap<>();
+        vals.put(":category", new AttributeValue().withS(category));
+        DynamoDBQueryExpression<ProductEntity> queryExp = new DynamoDBQueryExpression<ProductEntity>()
+                .withKeyConditionExpression("category = :category")
+                .withIndexName("categoryGSI")
+                .withConsistentRead(false)
+                .withExpressionAttributeValues(vals);
+        List<ProductEntity> products =  mapper.query(ProductEntity.class, queryExp);
+        return products;
+//        QuerySpec spec = new QuerySpec()
+//                .withKeyConditionExpression("category = :category")
+//                .withValueMap(new ValueMap()
+//                        .withString(":category",category));
+//
+//        List<ProductEntity> products =  mapper.query(ProductEntity.class, queryExp);
+//        ItemCollection<QueryOutcome> items = index.query(spec);
+//        List<ProductEntity> products =  mapper.query(ProductEntity.class,items);
+//        Iterator<Item> iter = items.iterator();
+//        while (iter.hasNext()) {
+//            System.out.println(iter.next().toJSONPretty());
+//        }
+    }
+
 
 //    public List<ProductEntity> fetchAllProductsByCategory(String category){
 //

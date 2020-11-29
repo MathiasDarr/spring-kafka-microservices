@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,6 +51,11 @@ public class ProductService {
     public List<Product> fetchAllProductsByBrand(String brand){
         return productRepository.fetchAllProductsByBrand(brand).stream().map(ProductService::map).collect(Collectors.toList());
     }
+
+    public List<Product> fetchAllProductsByCategory(String category){
+        return productRepository.fetchAllProductsByCategory(category).stream().map(ProductService::map).collect(Collectors.toList());
+    }
+
 
     private static Product map(ProductRepository.ProductEntity entity) {
         return new Product(entity.getVendor(), entity.getProductName(), entity.getPrice(), entity.getCategory());
