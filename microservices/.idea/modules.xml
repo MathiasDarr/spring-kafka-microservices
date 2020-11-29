@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/avro-schema/avro-schema.iml" filepath="$PROJECT_DIR$/avro-schema/avro-schema.iml" />
       <module fileurl="file://$PROJECT_DIR$/inventory-service/inventory-service.iml" filepath="$PROJECT_DIR$/inventory-service/inventory-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/microservices.iml" filepath="$PROJECT_DIR$/microservices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orders-service/orders-service.iml" filepath="$PROJECT_DIR$/orders-service/orders-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-utilities/service-utilities.iml" filepath="$PROJECT_DIR$/service-utilities/service-utilities.iml" />
     </modules>
   </component>

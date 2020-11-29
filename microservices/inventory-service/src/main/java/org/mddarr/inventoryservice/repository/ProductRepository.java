@@ -70,9 +70,6 @@ public class ProductRepository {
     }
 
     public List<ProductEntity> fetchAllProductsByCategory(String category){
-        Table table = dynamoDB.getTable("Products");
-        Index index = table.getIndex("categoryGSI");
-
         Map<String, AttributeValue> vals = new HashMap<>();
         vals.put(":category", new AttributeValue().withS(category));
         DynamoDBQueryExpression<ProductEntity> queryExp = new DynamoDBQueryExpression<ProductEntity>()
@@ -82,27 +79,7 @@ public class ProductRepository {
                 .withExpressionAttributeValues(vals);
         List<ProductEntity> products =  mapper.query(ProductEntity.class, queryExp);
         return products;
-//        QuerySpec spec = new QuerySpec()
-//                .withKeyConditionExpression("category = :category")
-//                .withValueMap(new ValueMap()
-//                        .withString(":category",category));
-//
-//        List<ProductEntity> products =  mapper.query(ProductEntity.class, queryExp);
-//        ItemCollection<QueryOutcome> items = index.query(spec);
-//        List<ProductEntity> products =  mapper.query(ProductEntity.class,items);
-//        Iterator<Item> iter = items.iterator();
-//        while (iter.hasNext()) {
-//            System.out.println(iter.next().toJSONPretty());
-//        }
     }
-
-
-//    public List<ProductEntity> fetchAllProductsByCategory(String category){
-//
-//
-//
-//    }
-//
 
     public List<Category> fetchAllCategories(){
         ScanRequest scanRequest = new ScanRequest()

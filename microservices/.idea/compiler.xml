@@ -6,15 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="service-utilities" />
+        <module name="orders-service" />
         <module name="inventory-service" />
         <module name="avro-schema" />
+        <module name="service-utilities" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="avro-schema" target="1.8" />
       <module name="inventory-service" target="11" />
       <module name="microservices" target="11" />
+      <module name="orders-service" target="11" />
       <module name="service-utilities" target="11" />
     </bytecodeTargetLevel>
   </component>
@@ -22,6 +24,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="avro-schema" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
+      <module name="orders-service" options="-parameters" />
       <module name="service-utilities" options="-parameters" />
     </option>
   </component>
