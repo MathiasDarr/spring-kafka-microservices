@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.mddarr.inventoryservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @SpringBootTest
-class InventoryServiceApplicationTests {
+class ProductsServiceApplicationTests extends AbstractIntegrationTest {
 
 	@Autowired
 	AmazonDynamoDB dynamoDB;
@@ -46,6 +47,5 @@ class InventoryServiceApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 
 }

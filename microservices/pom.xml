@@ -21,7 +21,7 @@
 	<modules>
 		<module>avro-schema</module>
 		<module>orders-service</module>
-<!--		<module>inventory-service</module>-->
+		<module>inventory-service</module>
 		<module>service-utilities</module>
 <!--		<module>producers</module>-->
 	</modules>
