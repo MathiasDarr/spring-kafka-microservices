@@ -33,10 +33,10 @@ public class OrdersController {
         return ordersService.fetchCustomersOrders(customerID);
     }
 
-    @GetMapping("/customerOrders/{customerID}/{creationDate}")
-    public List<Order> getCustomerOrders(@PathVariable String customerID, @PathVariable String creationDate){
-        return ordersService.fetchCustomersOrders(customerID, creationDate);
-    }
+//    @GetMapping("/customerOrders/{customerID}/{creationDate}")
+//    public List<Order> getCustomerOrders(@PathVariable String customerID, @PathVariable String creationDate){
+//        return ordersService.fetchCustomersOrders(customerID, creationDate);
+//    }
 
 
     @DeleteMapping("/{order}/{creationDate}")

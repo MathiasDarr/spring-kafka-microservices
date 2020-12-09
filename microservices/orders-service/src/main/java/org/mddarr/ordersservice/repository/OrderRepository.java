@@ -39,20 +39,26 @@ public class OrderRepository {
         List <OrderEntity> orders = mapper.scan(OrderEntity.class, scanExpression);
         return orders;
     }
+//
+//    public List<OrderEntity> fetchCustomerOrders(String customerID, String orderDate){
+//
+//    }
 
-    public List<OrderEntity> fetchCustomerOrders(String customerID, String orderDate){
-        Map<String, AttributeValue> vals = new HashMap<>();
-        vals.put(":cid", new AttributeValue().withS(customerID));
-        vals.put(":orderDate", new AttributeValue().withN(orderDate));
 
-        DynamoDBQueryExpression<OrderEntity> queryExp = new DynamoDBQueryExpression<OrderEntity>()
-                .withKeyConditionExpression("customerID = :cid and orderCreationDate > :orderDate")
-                .withIndexName("customerOrderIndex")
-                .withConsistentRead(false)
-                .withExpressionAttributeValues(vals);
-        List<OrderEntity> orders =  mapper.query(OrderEntity.class, queryExp);
-        return orders;
-    }
+
+//    public List<OrderEntity> fetchCustomerOrders(String customerID, String orderDate){
+//        Map<String, AttributeValue> vals = new HashMap<>();
+//        vals.put(":cid", new AttributeValue().withS(customerID));
+//        vals.put(":orderDate", new AttributeValue().withN(orderDate));
+//
+//        DynamoDBQueryExpression<OrderEntity> queryExp = new DynamoDBQueryExpression<OrderEntity>()
+//                .withKeyConditionExpression("customerID = :cid and orderCreationDate > :orderDate")
+//                .withIndexName("customerOrderIndex")
+//                .withConsistentRead(false)
+//                .withExpressionAttributeValues(vals);
+//        List<OrderEntity> orders =  mapper.query(OrderEntity.class, queryExp);
+//        return orders;
+//    }
 
     public List<OrderEntity> fetchCustomerOrders(String customerID){
         Map<String, AttributeValue> vals = new HashMap<>();
@@ -60,7 +66,6 @@ public class OrderRepository {
 
         DynamoDBQueryExpression<OrderEntity> queryExp = new DynamoDBQueryExpression<OrderEntity>()
                 .withKeyConditionExpression("customerID = :cid")
-                .withIndexName("customerOrderIndex")
                 .withConsistentRead(false)
                 .withExpressionAttributeValues(vals);
         List<OrderEntity> orders =  mapper.query(OrderEntity.class, queryExp);

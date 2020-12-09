@@ -30,9 +30,9 @@ public class OrdersService {
         return orderRepository.fetchCustomerOrders(customerID).stream().map(OrdersService::map).collect(Collectors.toList());
     }
 
-    public List<Order> fetchCustomersOrders(String customerID, String orderDate){
-        return orderRepository.fetchCustomerOrders(customerID, orderDate).stream().map(OrdersService::map).collect(Collectors.toList());
-    }
+//    public List<Order> fetchCustomersOrders(String customerID, String orderDate){
+//        return orderRepository.fetchCustomerOrders(customerID, orderDate).stream().map(OrdersService::map).collect(Collectors.toList());
+//    }
 
 
     public Optional<Order> get(String orderID, long creationDate) {

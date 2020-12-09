@@ -7,7 +7,7 @@
 
 {"namespace": "org.mddarr.orders.event.dto",
  "type": "record",
- "name": "Order",
+ "name": "AvroOrder",
  "fields": [
      {"name": "id", "type": "string"},
      {"name": "customerId", "type": "string"},
