@@ -8,8 +8,7 @@ services:
       - ecs-local-endpoints
     command: java -jar app.jar
     ports:
-      - 8080flask
-      - :8080
+      - 8080:8080
     networks:
       credentials_network:
         ipv4_address: "169.254.170.3"
